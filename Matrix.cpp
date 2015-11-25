@@ -89,6 +89,7 @@ Matrix& Matrix::operator=(const Matrix& right)
             values[i][j] = right.values[i][j];
         }
     }
+     return *this;
 }
 
 Matrix::~Matrix()
@@ -280,7 +281,7 @@ bool Matrix::operator==(const Matrix& right) const
 
 bool Matrix::operator!=(const Matrix& right) const
 {
-	return !operator==(right);
+	return !(*this==right);
 }
 
 Matrix& Matrix::operator+=(const Matrix& right)
@@ -394,7 +395,8 @@ std::string Matrix::str() const
 		s<<"[ ";
 		for(int j = 0; j < cols; j++)
 		{
-			s<<values[i][j]<< " ";
+			//s<<values[i][j]<< " ";
+			s<<get(i,j) << " ";
 		}
 		s<<"]" <<std::endl;
 	}
@@ -410,7 +412,7 @@ Matrix Matrix::inverse() const
         	throw InvalidDimensions();
     	}	
    
-   	return result.adjoint()*(1/determinant());
+   	return (result.adjoint())*(1/determinant());
 }
 
 
@@ -453,10 +455,14 @@ int main()
     m(2, 1) = 0;
     m(2, 2) = 6;
 
-
+   
+	
+	
 	
     std::cout << m << std::endl;	
     std::cout << m.cofactor() << std::endl;
+
+
     
     return 0;
 }
